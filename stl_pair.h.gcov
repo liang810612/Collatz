@@ -1,0 +1,306 @@
+        -:    0:Source:/usr/include/c++/4.7/bits/stl_pair.h
+        -:    0:Programs:2
+        -:    1:// Pair implementation -*- C++ -*-
+        -:    2:
+        -:    3:// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+        -:    4:// 2010, 2011, 2012
+        -:    5:// Free Software Foundation, Inc.
+        -:    6://
+        -:    7:// This file is part of the GNU ISO C++ Library.  This library is free
+        -:    8:// software; you can redistribute it and/or modify it under the
+        -:    9:// terms of the GNU General Public License as published by the
+        -:   10:// Free Software Foundation; either version 3, or (at your option)
+        -:   11:// any later version.
+        -:   12:
+        -:   13:// This library is distributed in the hope that it will be useful,
+        -:   14:// but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   15:// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        -:   16:// GNU General Public License for more details.
+        -:   17:
+        -:   18:// Under Section 7 of GPL version 3, you are granted additional
+        -:   19:// permissions described in the GCC Runtime Library Exception, version
+        -:   20:// 3.1, as published by the Free Software Foundation.
+        -:   21:
+        -:   22:// You should have received a copy of the GNU General Public License and
+        -:   23:// a copy of the GCC Runtime Library Exception along with this program;
+        -:   24:// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+        -:   25:// <http://www.gnu.org/licenses/>.
+        -:   26:
+        -:   27:/*
+        -:   28: *
+        -:   29: * Copyright (c) 1994
+        -:   30: * Hewlett-Packard Company
+        -:   31: *
+        -:   32: * Permission to use, copy, modify, distribute and sell this software
+        -:   33: * and its documentation for any purpose is hereby granted without fee,
+        -:   34: * provided that the above copyright notice appear in all copies and
+        -:   35: * that both that copyright notice and this permission notice appear
+        -:   36: * in supporting documentation.  Hewlett-Packard Company makes no
+        -:   37: * representations about the suitability of this software for any
+        -:   38: * purpose.  It is provided "as is" without express or implied warranty.
+        -:   39: *
+        -:   40: *
+        -:   41: * Copyright (c) 1996,1997
+        -:   42: * Silicon Graphics Computer Systems, Inc.
+        -:   43: *
+        -:   44: * Permission to use, copy, modify, distribute and sell this software
+        -:   45: * and its documentation for any purpose is hereby granted without fee,
+        -:   46: * provided that the above copyright notice appear in all copies and
+        -:   47: * that both that copyright notice and this permission notice appear
+        -:   48: * in supporting documentation.  Silicon Graphics makes no
+        -:   49: * representations about the suitability of this software for any
+        -:   50: * purpose.  It is provided "as is" without express or implied warranty.
+        -:   51: */
+        -:   52:
+        -:   53:/** @file bits/stl_pair.h
+        -:   54: *  This is an internal header file, included by other library headers.
+        -:   55: *  Do not attempt to use it directly. @headername{utility}
+        -:   56: */
+        -:   57:
+        -:   58:#ifndef _STL_PAIR_H
+        -:   59:#define _STL_PAIR_H 1
+        -:   60:
+        -:   61:#include <bits/move.h> // for std::move / std::forward, and std::swap
+        -:   62:
+        -:   63:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:   64:#include <type_traits> // for std::__decay_and_strip too
+        -:   65:#endif
+        -:   66:
+        -:   67:namespace std _GLIBCXX_VISIBILITY(default)
+        -:   68:{
+        -:   69:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   70:
+        -:   71:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:   72:  /// piecewise_construct_t
+        -:   73:  struct piecewise_construct_t { };
+        -:   74:
+        -:   75:  /// piecewise_construct
+        -:   76:  constexpr piecewise_construct_t piecewise_construct = piecewise_construct_t();
+        -:   77:
+        -:   78:  // Forward declarations.
+        -:   79:  template<typename...>
+        -:   80:    class tuple;
+        -:   81:
+        -:   82:  template<std::size_t...>
+        -:   83:    struct _Index_tuple;
+        -:   84:#endif
+        -:   85:
+        -:   86:  /// Struct holding two objects of arbitrary type.
+        -:   87:  template<class _T1, class _T2>
+        -:   88:    struct pair
+        -:   89:    {
+        -:   90:      typedef _T1 first_type;    /// @c first_type is the first bound type
+        -:   91:      typedef _T2 second_type;   /// @c second_type is the second bound type
+        -:   92:
+        -:   93:      _T1 first;                 /// @c first is a copy of the first object
+        -:   94:      _T2 second;                /// @c second is a copy of the second object
+        -:   95:
+        -:   96:      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:   97:      // 265.  std::pair::pair() effects overly restrictive
+        -:   98:      /** The default constructor creates @c first and @c second using their
+        -:   99:       *  respective default constructors.  */
+        -:  100:      _GLIBCXX_CONSTEXPR pair()
+        -:  101:      : first(), second() { }
+        -:  102:
+        -:  103:      /** Two objects may be passed to a @c pair constructor to be copied.  */
+        -:  104:      _GLIBCXX_CONSTEXPR pair(const _T1& __a, const _T2& __b)
+        -:  105:      : first(__a), second(__b) { }
+        -:  106:
+        -:  107:      /** There is also a templated copy ctor for the @c pair class itself.  */
+        -:  108:#ifndef __GXX_EXPERIMENTAL_CXX0X__
+        -:  109:      template<class _U1, class _U2>
+        -:  110:	pair(const pair<_U1, _U2>& __p)
+        -:  111:	: first(__p.first), second(__p.second) { }
+        -:  112:#else
+        -:  113:      template<class _U1, class _U2, class = typename
+        -:  114:	       enable_if<__and_<is_convertible<const _U1&, _T1>,
+        -:  115:				is_convertible<const _U2&, _T2>>::value>::type>
+        -:  116:	constexpr pair(const pair<_U1, _U2>& __p)
+        -:  117:	: first(__p.first), second(__p.second) { }
+        -:  118:
+        -:  119:      constexpr pair(const pair&) = default;
+        -:  120:      constexpr pair(pair&&) = default;
+        -:  121:
+        -:  122:      // DR 811.
+        -:  123:      template<class _U1, class = typename
+        -:  124:	       enable_if<is_convertible<_U1, _T1>::value>::type>
+        -:  125:	constexpr pair(_U1&& __x, const _T2& __y)
+        -:  126:	: first(std::forward<_U1>(__x)), second(__y) { }
+        -:  127:
+        -:  128:      template<class _U2, class = typename
+        -:  129:	       enable_if<is_convertible<_U2, _T2>::value>::type>
+        -:  130:	constexpr pair(const _T1& __x, _U2&& __y)
+        -:  131:	: first(__x), second(std::forward<_U2>(__y)) { }
+        -:  132:
+        -:  133:      template<class _U1, class _U2, class = typename
+        -:  134:	       enable_if<__and_<is_convertible<_U1, _T1>,
+        -:  135:				is_convertible<_U2, _T2>>::value>::type>
+function _ZNSt4pairIiiEC1IRiS2_vEEOT_OT0_ called 4 returned 100% blocks executed 100%
+function _ZNSt4pairIiiEC1IiivEEOT_OT0_ called 6 returned 100% blocks executed 100%
+       10:  136:	constexpr pair(_U1&& __x, _U2&& __y)
+       10:  137:	: first(std::forward<_U1>(__x)), second(std::forward<_U2>(__y)) { }
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+        -:  138:
+        -:  139:      template<class _U1, class _U2, class = typename
+        -:  140:	       enable_if<__and_<is_convertible<_U1, _T1>,
+        -:  141:				is_convertible<_U2, _T2>>::value>::type>
+        -:  142:	constexpr pair(pair<_U1, _U2>&& __p)
+        -:  143:	: first(std::forward<_U1>(__p.first)),
+        -:  144:	  second(std::forward<_U2>(__p.second)) { }
+        -:  145:
+        -:  146:      template<typename... _Args1, typename... _Args2>
+        -:  147:        pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+        -:  148:
+        -:  149:      pair&
+        -:  150:      operator=(const pair& __p)
+        -:  151:      {
+        -:  152:	first = __p.first;
+        -:  153:	second = __p.second;
+        -:  154:	return *this;
+        -:  155:      }
+        -:  156:
+        -:  157:      pair&
+        -:  158:      operator=(pair&& __p)
+        -:  159:      noexcept(__and_<is_nothrow_move_assignable<_T1>,
+        -:  160:	              is_nothrow_move_assignable<_T2>>::value)
+        -:  161:      {
+        -:  162:	first = std::forward<first_type>(__p.first);
+        -:  163:	second = std::forward<second_type>(__p.second);
+        -:  164:	return *this;
+        -:  165:      }
+        -:  166:
+        -:  167:      template<class _U1, class _U2>
+        -:  168:	pair&
+        -:  169:	operator=(const pair<_U1, _U2>& __p)
+        -:  170:	{
+        -:  171:	  first = __p.first;
+        -:  172:	  second = __p.second;
+        -:  173:	  return *this;
+        -:  174:	}
+        -:  175:
+        -:  176:      template<class _U1, class _U2>
+        -:  177:	pair&
+        -:  178:	operator=(pair<_U1, _U2>&& __p)
+        -:  179:	{
+        -:  180:	  first = std::forward<_U1>(__p.first);
+        -:  181:	  second = std::forward<_U2>(__p.second);
+        -:  182:	  return *this;
+        -:  183:	}
+        -:  184:
+        -:  185:      void
+        -:  186:      swap(pair& __p)
+        -:  187:      noexcept(noexcept(swap(first, __p.first))
+        -:  188:	       && noexcept(swap(second, __p.second)))
+        -:  189:      {
+        -:  190:	using std::swap;
+        -:  191:	swap(first, __p.first);
+        -:  192:	swap(second, __p.second);
+        -:  193:      }
+        -:  194:
+        -:  195:    private:
+        -:  196:      template<typename... _Args1, std::size_t... _Indexes1,
+        -:  197:               typename... _Args2, std::size_t... _Indexes2>
+        -:  198:        pair(tuple<_Args1...>&, tuple<_Args2...>&,
+        -:  199:             _Index_tuple<_Indexes1...>, _Index_tuple<_Indexes2...>);
+        -:  200:#endif
+        -:  201:    };
+        -:  202:
+        -:  203:  /// Two pairs of the same type are equal iff their members are equal.
+        -:  204:  template<class _T1, class _T2>
+        -:  205:    inline _GLIBCXX_CONSTEXPR bool
+function _ZSteqIiiEbRKSt4pairIT_T0_ES5_ called 5 returned 100% blocks executed 100%
+        5:  206:    operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        5:  207:    { return __x.first == __y.first && __x.second == __y.second; }
+branch  0 taken 20% (fallthrough)
+branch  1 taken 80%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+        -:  208:
+        -:  209:  /// <http://gcc.gnu.org/onlinedocs/libstdc++/manual/utilities.html>
+        -:  210:  template<class _T1, class _T2>
+        -:  211:    inline _GLIBCXX_CONSTEXPR bool
+        -:  212:    operator<(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        -:  213:    { return __x.first < __y.first
+        -:  214:	     || (!(__y.first < __x.first) && __x.second < __y.second); }
+        -:  215:
+        -:  216:  /// Uses @c operator== to find the result.
+        -:  217:  template<class _T1, class _T2>
+        -:  218:    inline _GLIBCXX_CONSTEXPR bool
+        -:  219:    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        -:  220:    { return !(__x == __y); }
+        -:  221:
+        -:  222:  /// Uses @c operator< to find the result.
+        -:  223:  template<class _T1, class _T2>
+        -:  224:    inline _GLIBCXX_CONSTEXPR bool
+        -:  225:    operator>(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        -:  226:    { return __y < __x; }
+        -:  227:
+        -:  228:  /// Uses @c operator< to find the result.
+        -:  229:  template<class _T1, class _T2>
+        -:  230:    inline _GLIBCXX_CONSTEXPR bool
+        -:  231:    operator<=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        -:  232:    { return !(__y < __x); }
+        -:  233:
+        -:  234:  /// Uses @c operator< to find the result.
+        -:  235:  template<class _T1, class _T2>
+        -:  236:    inline _GLIBCXX_CONSTEXPR bool
+        -:  237:    operator>=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+        -:  238:    { return !(__x < __y); }
+        -:  239:
+        -:  240:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:  241:  /// See std::pair::swap().
+        -:  242:  // Note:  no std::swap overloads in C++03 mode, this has performance
+        -:  243:  //        implications, see, eg, libstdc++/38466.
+        -:  244:  template<class _T1, class _T2>
+        -:  245:    inline void
+        -:  246:    swap(pair<_T1, _T2>& __x, pair<_T1, _T2>& __y)
+        -:  247:    noexcept(noexcept(__x.swap(__y)))
+        -:  248:    { __x.swap(__y); }
+        -:  249:#endif
+        -:  250:
+        -:  251:  /**
+        -:  252:   *  @brief A convenience wrapper for creating a pair from two objects.
+        -:  253:   *  @param  __x  The first object.
+        -:  254:   *  @param  __y  The second object.
+        -:  255:   *  @return   A newly-constructed pair<> object of the appropriate type.
+        -:  256:   *
+        -:  257:   *  The standard requires that the objects be passed by reference-to-const,
+        -:  258:   *  but LWG issue #181 says they should be passed by const value.  We follow
+        -:  259:   *  the LWG by default.
+        -:  260:   */
+        -:  261:  // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:  262:  // 181.  make_pair() unintended behavior
+        -:  263:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:  264:  // NB: DR 706.
+        -:  265:  template<class _T1, class _T2>
+        -:  266:    constexpr pair<typename __decay_and_strip<_T1>::__type,
+        -:  267:                   typename __decay_and_strip<_T2>::__type>
+function _ZSt9make_pairIRiS0_ESt4pairINSt17__decay_and_stripIT_E6__typeENS2_IT0_E6__typeEEOS3_OS6_ called 4 returned 100% blocks executed 100%
+function _ZSt9make_pairIiiESt4pairINSt17__decay_and_stripIT_E6__typeENS1_IT0_E6__typeEEOS2_OS5_ called 6 returned 100% blocks executed 100%
+       10:  268:    make_pair(_T1&& __x, _T2&& __y)
+        -:  269:    {
+        -:  270:      typedef typename __decay_and_strip<_T1>::__type __ds_type1;
+        -:  271:      typedef typename __decay_and_strip<_T2>::__type __ds_type2;
+        -:  272:      typedef pair<__ds_type1, __ds_type2> 	      __pair_type;
+       10:  273:      return __pair_type(std::forward<_T1>(__x), std::forward<_T2>(__y));
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+        -:  274:    }
+        -:  275:#else
+        -:  276:  template<class _T1, class _T2>
+        -:  277:    inline pair<_T1, _T2>
+        -:  278:    make_pair(_T1 __x, _T2 __y)
+        -:  279:    { return pair<_T1, _T2>(__x, __y); }
+        -:  280:#endif
+        -:  281:
+        -:  282:_GLIBCXX_END_NAMESPACE_VERSION
+        -:  283:} // namespace
+        -:  284:
+        -:  285:#endif /* _STL_PAIR_H */

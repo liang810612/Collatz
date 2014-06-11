@@ -1,0 +1,118 @@
+        -:    0:Source:RunCollatz.c++
+        -:    0:Programs:2
+        -:    1:// -------------------------------
+        -:    2:// projects/collatz/RunCollatz.c++
+        -:    3:// Copyright (C) 2014
+        -:    4:// Glenn P. Downing
+        -:    5:// -------------------------------
+        -:    6:
+        -:    7:/*
+        -:    8:To compile the program:
+        -:    9:    % g++-4.7 -fprofile-arcs -ftest-coverage -pedantic -std=c++11 -Wall Collatz.c++ RunCollatz.c++ -o RunCollatz
+        -:   10:
+        -:   11:To run the program:
+        -:   12:    % valgrind RunCollatz < RunCollatz.in
+        -:   13:
+        -:   14:To obtain coverage of the run:
+        -:   15:    % gcov-4.7 -b Collatz.c++ RunCollatz.c++
+        -:   16:
+        -:   17:To configure Doxygen:
+        -:   18:    % doxygen -g
+        -:   19:    That creates the file "Doxyfile".
+        -:   20:    Make the following edits:
+        -:   21:    EXTRACT_ALL            = YES
+        -:   22:    EXTRACT_PRIVATE        = YES
+        -:   23:    EXTRACT_STATIC         = YES
+        -:   24:    GENERATE_LATEX         = NO
+        -:   25:
+        -:   26:To document the program:
+        -:   27:    % doxygen Doxyfile
+        -:   28:*/
+        -:   29:
+        -:   30:// -------
+        -:   31:// defines
+        -:   32:// -------
+        -:   33:
+        -:   34:#ifdef ONLINE_JUDGE
+        -:   35:    #define NDEBUG
+        -:   36:#endif
+        -:   37:
+        -:   38:// --------
+        -:   39:// includes
+        -:   40:// --------
+        -:   41:
+        -:   42:#include <iostream> // cin, cout
+        -:   43:
+        -:   44:#include "Collatz.h"
+        -:   45:
+        -:   46:// ----
+        -:   47:// main
+        -:   48:// ----
+        -:   49:
+function main called 1 returned 100% blocks executed 100%
+        1:   50:int main () {
+        -:   51:    using namespace std;
+        1:   52:    collatz_solve(cin, cout);
+call    0 returned 100%
+function _GLOBAL__sub_I_main called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 100%
+        4:   53:    return 0;}
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0%
+        -:   54:
+        -:   55:/*
+        -:   56:% g++-4.7 -fprofile-arcs -ftest-coverage -pedantic -std=c++11 -Wall Collatz.c++ RunCollatz.c++ -o RunCollatz
+        -:   57:
+        -:   58:
+        -:   59:
+        -:   60:% valgrind RunCollatz < RunCollatz.in > RunCollatz.out
+        -:   61:==17119== Memcheck, a memory error detector
+        -:   62:==17119== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+        -:   63:==17119== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+        -:   64:==17119== Command: RunCollatz
+        -:   65:==17119==
+        -:   66:==17119==
+        -:   67:==17119== HEAP SUMMARY:
+        -:   68:==17119==     in use at exit: 0 bytes in 0 blocks
+        -:   69:==17119==   total heap usage: 2 allocs, 2 frees, 1,136 bytes allocated
+        -:   70:==17119==
+        -:   71:==17119== All heap blocks were freed -- no leaks are possible
+        -:   72:==17119==
+        -:   73:==17119== For counts of detected and suppressed errors, rerun with: -v
+        -:   74:==17119== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+        -:   75:
+        -:   76:
+        -:   77:
+        -:   78:% gcov-4.7 -b Collatz.c++
+        -:   79:File 'Collatz.c++'
+        -:   80:Lines executed:100.00% of 17
+        -:   81:Branches executed:100.00% of 18
+        -:   82:Taken at least once:61.11% of 18
+        -:   83:Calls executed:89.47% of 19
+        -:   84:Creating 'Collatz.c++.gcov'
+        -:   85:...
+        -:   86:
+        -:   87:
+        -:   88:
+        -:   89:% cat Collatz.c++.gcov
+        -:   90:...
+        -:   91:
+        -:   92:
+        -:   93:
+        -:   94:% gcov-4.7 -b RunCollatz.c++
+        -:   95:File 'RunCollatz.c++'
+        -:   96:Lines executed:100.00% of 3
+        -:   97:Branches executed:100.00% of 4
+        -:   98:Taken at least once:50.00% of 4
+        -:   99:Calls executed:100.00% of 2
+        -:  100:Creating 'RunCollatz.c++.gcov'
+        -:  101:...
+        -:  102:
+        -:  103:
+        -:  104:
+        -:  105:% cat RunCollatz.c++.gcov
+        -:  106:...
+        -:  107:*/

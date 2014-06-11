@@ -1,0 +1,203 @@
+        -:    0:Source:/usr/include/c++/4.7/bits/move.h
+        -:    0:Programs:2
+        -:    1:// Move, forward and identity for C++0x + swap -*- C++ -*-
+        -:    2:
+        -:    3:// Copyright (C) 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
+        -:    4://
+        -:    5:// This file is part of the GNU ISO C++ Library.  This library is free
+        -:    6:// software; you can redistribute it and/or modify it under the
+        -:    7:// terms of the GNU General Public License as published by the
+        -:    8:// Free Software Foundation; either version 3, or (at your option)
+        -:    9:// any later version.
+        -:   10:
+        -:   11:// This library is distributed in the hope that it will be useful,
+        -:   12:// but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   13:// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        -:   14:// GNU General Public License for more details.
+        -:   15:
+        -:   16:// Under Section 7 of GPL version 3, you are granted additional
+        -:   17:// permissions described in the GCC Runtime Library Exception, version
+        -:   18:// 3.1, as published by the Free Software Foundation.
+        -:   19:
+        -:   20:// You should have received a copy of the GNU General Public License and
+        -:   21:// a copy of the GCC Runtime Library Exception along with this program;
+        -:   22:// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+        -:   23:// <http://www.gnu.org/licenses/>.
+        -:   24:
+        -:   25:/** @file bits/move.h
+        -:   26: *  This is an internal header file, included by other library headers.
+        -:   27: *  Do not attempt to use it directly. @headername{utility}
+        -:   28: */
+        -:   29:
+        -:   30:#ifndef _MOVE_H
+        -:   31:#define _MOVE_H 1
+        -:   32:
+        -:   33:#include <bits/c++config.h>
+        -:   34:#include <bits/concept_check.h>
+        -:   35:
+        -:   36:namespace std _GLIBCXX_VISIBILITY(default)
+        -:   37:{
+        -:   38:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   39:
+        -:   40:  // Used, in C++03 mode too, by allocators, etc.
+        -:   41:  /**
+        -:   42:   *  @brief Same as C++11 std::addressof
+        -:   43:   *  @ingroup utilities
+        -:   44:   */
+        -:   45:  template<typename _Tp>
+        -:   46:    inline _Tp*
+        -:   47:    __addressof(_Tp& __r) _GLIBCXX_NOEXCEPT
+        -:   48:    {
+        -:   49:      return reinterpret_cast<_Tp*>
+        -:   50:	(&const_cast<char&>(reinterpret_cast<const volatile char&>(__r)));
+        -:   51:    }
+        -:   52:
+        -:   53:_GLIBCXX_END_NAMESPACE_VERSION
+        -:   54:} // namespace
+        -:   55:
+        -:   56:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:   57:#include <type_traits> // Brings in std::declval too.
+        -:   58:
+        -:   59:namespace std _GLIBCXX_VISIBILITY(default)
+        -:   60:{
+        -:   61:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   62:
+        -:   63:  /**
+        -:   64:   *  @addtogroup utilities
+        -:   65:   *  @{
+        -:   66:   */
+        -:   67:
+        -:   68:  // forward (as per N3143)
+        -:   69:  /**
+        -:   70:   *  @brief  Forward an lvalue.
+        -:   71:   *  @return The parameter cast to the specified type.
+        -:   72:   *
+        -:   73:   *  This function is used to implement "perfect forwarding".
+        -:   74:   */
+        -:   75:  template<typename _Tp>
+        -:   76:    constexpr _Tp&&
+function _ZSt7forwardIRiEOT_RNSt16remove_referenceIS1_E4typeE called 16 returned 100% blocks executed 100%
+function _ZSt7forwardIiEOT_RNSt16remove_referenceIS0_E4typeE called 24 returned 100% blocks executed 100%
+       40:   77:    forward(typename std::remove_reference<_Tp>::type& __t) noexcept
+       40:   78:    { return static_cast<_Tp&&>(__t); }
+        -:   79:
+        -:   80:  /**
+        -:   81:   *  @brief  Forward an rvalue.
+        -:   82:   *  @return The parameter cast to the specified type.
+        -:   83:   *
+        -:   84:   *  This function is used to implement "perfect forwarding".
+        -:   85:   */
+        -:   86:  template<typename _Tp>
+        -:   87:    constexpr _Tp&&
+        -:   88:    forward(typename std::remove_reference<_Tp>::type&& __t) noexcept
+        -:   89:    {
+        -:   90:      static_assert(!std::is_lvalue_reference<_Tp>::value, "template argument"
+        -:   91:		    " substituting _Tp is an lvalue reference type");
+        -:   92:      return static_cast<_Tp&&>(__t);
+        -:   93:    }
+        -:   94:
+        -:   95:  /**
+        -:   96:   *  @brief  Convert a value to an rvalue.
+        -:   97:   *  @param  __t  A thing of arbitrary type.
+        -:   98:   *  @return The parameter cast to an rvalue-reference to allow moving it.
+        -:   99:  */
+        -:  100:  template<typename _Tp>
+        -:  101:    constexpr typename std::remove_reference<_Tp>::type&&
+        -:  102:    move(_Tp&& __t) noexcept
+        -:  103:    { return static_cast<typename std::remove_reference<_Tp>::type&&>(__t); }
+        -:  104:
+        -:  105:
+        -:  106:  template<typename _Tp>
+        -:  107:    struct __move_if_noexcept_cond
+        -:  108:    : public __and_<__not_<is_nothrow_move_constructible<_Tp>>,
+        -:  109:                    is_copy_constructible<_Tp>>::type { };
+        -:  110:
+        -:  111:  /**
+        -:  112:   *  @brief  Conditionally convert a value to an rvalue.
+        -:  113:   *  @param  __x  A thing of arbitrary type.
+        -:  114:   *  @return The parameter, possibly cast to an rvalue-reference.
+        -:  115:   *
+        -:  116:   *  Same as std::move unless the type's move constructor could throw and the
+        -:  117:   *  type is copyable, in which case an lvalue-reference is returned instead.
+        -:  118:   */
+        -:  119:  template<typename _Tp>
+        -:  120:    inline typename
+        -:  121:    conditional<__move_if_noexcept_cond<_Tp>::value, const _Tp&, _Tp&&>::type
+        -:  122:    move_if_noexcept(_Tp& __x) noexcept
+        -:  123:    { return std::move(__x); }
+        -:  124:
+        -:  125:  // declval, from type_traits.
+        -:  126:
+        -:  127:  /**
+        -:  128:   *  @brief Returns the actual address of the object or function
+        -:  129:   *         referenced by r, even in the presence of an overloaded
+        -:  130:   *         operator&.
+        -:  131:   *  @param  __r  Reference to an object or function.
+        -:  132:   *  @return   The actual address.
+        -:  133:  */
+        -:  134:  template<typename _Tp>
+        -:  135:    inline _Tp*
+        -:  136:    addressof(_Tp& __r) noexcept
+        -:  137:    { return std::__addressof(__r); }
+        -:  138:
+        -:  139:  /// @} group utilities
+        -:  140:_GLIBCXX_END_NAMESPACE_VERSION
+        -:  141:} // namespace
+        -:  142:
+        -:  143:#define _GLIBCXX_MOVE(__val) std::move(__val)
+        -:  144:#define _GLIBCXX_FORWARD(_Tp, __val) std::forward<_Tp>(__val)
+        -:  145:#else
+        -:  146:#define _GLIBCXX_MOVE(__val) (__val)
+        -:  147:#define _GLIBCXX_FORWARD(_Tp, __val) (__val)
+        -:  148:#endif
+        -:  149:
+        -:  150:namespace std _GLIBCXX_VISIBILITY(default)
+        -:  151:{
+        -:  152:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:  153:
+        -:  154:  /**
+        -:  155:   *  @addtogroup utilities
+        -:  156:   *  @{
+        -:  157:   */
+        -:  158:
+        -:  159:  /**
+        -:  160:   *  @brief Swaps two values.
+        -:  161:   *  @param  __a  A thing of arbitrary type.
+        -:  162:   *  @param  __b  Another thing of arbitrary type.
+        -:  163:   *  @return   Nothing.
+        -:  164:  */
+        -:  165:  template<typename _Tp>
+        -:  166:    inline void
+        -:  167:    swap(_Tp& __a, _Tp& __b)
+        -:  168:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:  169:    noexcept(__and_<is_nothrow_move_constructible<_Tp>,
+        -:  170:	            is_nothrow_move_assignable<_Tp>>::value)
+        -:  171:#endif
+        -:  172:    {
+        -:  173:      // concept requirements
+        -:  174:      __glibcxx_function_requires(_SGIAssignableConcept<_Tp>)
+        -:  175:
+        -:  176:      _Tp __tmp = _GLIBCXX_MOVE(__a);
+        -:  177:      __a = _GLIBCXX_MOVE(__b);
+        -:  178:      __b = _GLIBCXX_MOVE(__tmp);
+        -:  179:    }
+        -:  180:
+        -:  181:  // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:  182:  // DR 809. std::swap should be overloaded for array types.
+        -:  183:  /// Swap the contents of two arrays.
+        -:  184:  template<typename _Tp, size_t _Nm>
+        -:  185:    inline void
+        -:  186:    swap(_Tp (&__a)[_Nm], _Tp (&__b)[_Nm])
+        -:  187:#ifdef __GXX_EXPERIMENTAL_CXX0X__
+        -:  188:    noexcept(noexcept(swap(*__a, *__b)))
+        -:  189:#endif
+        -:  190:    {
+        -:  191:      for (size_t __n = 0; __n < _Nm; ++__n)
+        -:  192:	swap(__a[__n], __b[__n]);
+        -:  193:    }
+        -:  194:
+        -:  195:  /// @} group utilities
+        -:  196:_GLIBCXX_END_NAMESPACE_VERSION
+        -:  197:} // namespace
+        -:  198:
+        -:  199:#endif /* _MOVE_H */
