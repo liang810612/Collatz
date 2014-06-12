@@ -42,11 +42,12 @@ int collatz_eval (int i, int j) {
     int cycle = 1;
     int num_iteration = j - i +1;
     for(int k = i; k <= num_iteration; k++){
-        while(k > 1){
-            if((k % 2) == 0)
-                k = (k / 2);
+        int j = k;
+        while(j > 1){
+            if((j % 2) == 0)
+                j = (j / 2);
             else
-                k = (3 * k) + 1;
+                j = (3 * j) + 1;
             ++cycle;
         }
         if(cycle > max_cycle)
