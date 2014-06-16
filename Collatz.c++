@@ -33,6 +33,9 @@ std::pair<int, int> collatz_read (std::istream& r) {
 
 int collatz_eval (int i, int j) {
     // <your code>
+    assert(i > 0);
+    assert(j > 0);
+
      if (i > j){
          int sub = i;
          i = j;
@@ -56,6 +59,7 @@ int collatz_eval (int i, int j) {
         ++k;
         h = k;   
     }
+    assert(max_cycle > 0);
     return max_cycle;
 }
 
