@@ -33,38 +33,34 @@ std::pair<int, int> collatz_read (std::istream& r) {
 
 int collatz_eval (int i, int j) {
     // <your code>
-    if (i > j){
-        int sub = i;
-        i = j;
-        j = sub;
-    }
+    // if (i > j){
+    //     int sub = i;
+    //     i = j;
+    //     j = sub;
+    // }
     int max_cycle = 1;
-    int cycle = 1;
-    int num_iteration = j - i +1;
-    for(int k = i; k <= num_iteration; k++){
-        int j = k;
-        while(j > 1){
-            if((j % 2) == 0)
-                j = (j / 2);
+    
+    int k = i;  
+    while(k <= j){
+        int h = k;
+        int cycle = 1;
+        while(h > 1){
+            if((h % 2) == 0)
+                h = (h / 2);
             else
-                j = (3 * j) + 1;
+                h = (3 * h) + 1;
             ++cycle;
         }
         if(cycle > max_cycle)
             max_cycle = cycle;
+        ++k;
+        h = k;   
     }
-    return max_cycle;
-    // while(i != j){
-    //     int k = i;
-    //     if((k % 2) == 0)
-    //         k = k/2;
-    //     else 
-    //         k = (3 * k) +1;
-    //     ++cycle;
-    //     ++i;
-    //     if(cycle > max_cycle)
-    //         max_cycle = cycle;
+    // for(int k = i; k <= num_iteration; k++){
+
     // }
+    return max_cycle;
+
 }
 
 // -------------
