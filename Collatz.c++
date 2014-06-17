@@ -44,12 +44,9 @@ int collatz_eval (int i, int j) {
      }
     int max_cycle = 1;
     int k = i; 
-
-    while(k <= j){
+    while( k <= j){
         int h = k;
-        if(cache[k] != 0)
-            return cache[k];
-        else{
+        if(cache[k] == 0){
             int cycle = 1;
             while(h > 1){
                 if((h % 2) == 0)
@@ -57,17 +54,40 @@ int collatz_eval (int i, int j) {
                 else
                     h = (3 * h) + 1;
                 ++cycle;
-                cache[k] = cycle;
             }
-            if(cycle > max_cycle){
-                max_cycle = cycle;
-                cache[k] = max_cycle;
-            }
-                
-            ++k;
-            h = k;   
+            cache[k] = cycle;
+            if(cache[k] > max_cycle)
+                max_cycle = cache[k];
         }
+        else{
+            if(cache[k] > max_cycle)
+                max_cycle = cache[k];
+        }
+        ++k;
+        h = k;
     }
+
+    // while(k <= j){
+    //     int h = k;
+    //      if(cache[k] != 0)
+    //        return 0;
+    //      else{
+    //         int cycle = 1;
+    //         while(h > 1){
+    //             if((h % 2) == 0)
+    //                 h = (h / 2);
+    //             else
+    //                 h = (3 * h) + 1;
+    //             ++cycle;
+    //             cache[k] = cycle;
+    //         }
+    //         if(cycle > max_cycle){
+    //             max_cycle = cycle;
+    //         }           
+    //         ++k;
+    //         h = k;   
+    //     }
+    // }
     assert(max_cycle > 0);
     return max_cycle;
 }
