@@ -57,6 +57,7 @@ int collatz_eval (int i, int j) {
                 else
                     h = (3 * h) + 1;
                 ++cycle;
+                cache[k] = cycle;
             }
             if(cycle > max_cycle){
                 max_cycle = cycle;
