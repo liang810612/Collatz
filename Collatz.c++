@@ -31,7 +31,7 @@ std::pair<int, int> collatz_read (std::istream& r) {
 // collatz_eval
 // ------------
 
-//int cache [1000000] = { 0 };
+int cache [1000000] = { 0 };
 int collatz_eval (int i, int j) {
     // <your code>
     assert(i > 0);
@@ -44,45 +44,30 @@ int collatz_eval (int i, int j) {
      }
     int max_cycle = 1;
     long k = i; 
-    // while( k <= j){
-    //     long h = k;
-    //     if(cache[k] == 0){
-    //         int cycle = 1;
-    //         while(h > 1){
-    //             if((h % 2) == 0)
-    //                 h >>= 1;
-    //             else
-    //                 h = (3 * h) + 1;
-    //             ++cycle;
-
-    //         }
-    //         cache[k] = cycle;
-    //         if(cache[k] > max_cycle)
-    //             max_cycle = cache[k];
-    //     }
-    //     else{
-    //         if(cache[k] > max_cycle)
-    //             max_cycle = cache[k];
-    //     }
-    //     ++k;
-    //     h = k;
-    // }     
-
-    while(k <= j){
+    while( k <= j){
         long h = k;
-        int cycle = 1;
-        while(h > 1){
-            if((h % 2) == 0)
-                h = (h / 2);
-            else
-                h = (3 * h) + 1;
-            ++cycle;
+        if(cache[k] == 0){
+            int cycle = 1;
+            while(h > 1){
+                if((h % 2) == 0)
+                    h >>= 1;
+                else
+                    h = (3 * h) + 1;
+                ++cycle;
+
+            }
+            cache[k] = cycle;
+            if(cache[k] > max_cycle)
+                max_cycle = cache[k];
         }
-        if(cycle > max_cycle)
-            max_cycle = cycle;
+        else{
+            if(cache[k] > max_cycle)
+                max_cycle = cache[k];
+        }
         ++k;
-        h = k;   
-    }
+        h = k;
+    }     
+
     assert(max_cycle > 0);
     return max_cycle;
 }
