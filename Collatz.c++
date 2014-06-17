@@ -31,6 +31,7 @@ std::pair<int, int> collatz_read (std::istream& r) {
 // collatz_eval
 // ------------
 
+int cache [1000000] = { 0 };
 int collatz_eval (int i, int j) {
     // <your code>
     assert(i > 0);
@@ -43,21 +44,28 @@ int collatz_eval (int i, int j) {
      }
     int max_cycle = 1;
     int k = i; 
-     
+
     while(k <= j){
         int h = k;
-        int cycle = 1;
-        while(h > 1){
-            if((h % 2) == 0)
-                h = (h / 2);
-            else
-                h = (3 * h) + 1;
-            ++cycle;
+        if(cache[k] != 0)
+            return cache[k];
+        else{
+            int cycle = 1;
+            while(h > 1){
+                if((h % 2) == 0)
+                    h = (h / 2);
+                else
+                    h = (3 * h) + 1;
+                ++cycle;
+            }
+            if(cycle > max_cycle){
+                max_cycle = cycle;
+                cache[k] = max_cycle;
+            }
+                
+            ++k;
+            h = k;   
         }
-        if(cycle > max_cycle)
-            max_cycle = cycle;
-        ++k;
-        h = k;   
     }
     assert(max_cycle > 0);
     return max_cycle;
