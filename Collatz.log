@@ -1,0 +1,168 @@
+commit 2423f50ee28b34528c8c6ef56912e9518484c9b8
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:40:01 2014 -0500
+
+    Finished
+
+commit 48cb29b842e8a051d7a06736bcefba66f7401bbf
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:34:08 2014 -0500
+
+    Finished
+
+commit 4cba8b3ac91f6308224ef5da0ddc4197cce8714e
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 23:54:03 2014 -0500
+
+    implement lazy cache
+
+commit 5402a9c77196a3ad977c207debdbf16ee4410b1a
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 22:27:05 2014 -0500
+
+    sepher not accepting
+
+commit f0dc3f35876606c9c0062aae936e3aeca89376fc
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 22:05:21 2014 -0500
+
+    cache implemented
+
+commit 38fcf2d041c3043b86a1f2370a51f7b9eeef83b7
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 15:20:30 2014 -0500
+
+    Add Assertions
+
+commit 9025096af0dc3c3f63c03463fee53145f23f8475
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 15:14:45 2014 -0500
+
+    Pass all test cases
+
+commit dadf18e405ce5417f51cefb905d7c4cce665244d
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:52:17 2014 -0500
+
+    sphere accepted
+
+commit 539da90e3269e9e0e4c2928be3a41648d867a43b
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:38:40 2014 -0500
+
+    add new files
+
+commit 653b0641ad0a422944212459de22265f42fb63ce
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:32:28 2014 -0500
+
+    make sure inpute in right order
+:
+commit 2423f50ee28b34528c8c6ef56912e9518484c9b8
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:40:01 2014 -0500
+
+    Finished
+
+commit 48cb29b842e8a051d7a06736bcefba66f7401bbf
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:34:08 2014 -0500
+
+    Finished
+
+commit 4cba8b3ac91f6308224ef5da0ddc4197cce8714e
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 23:54:03 2014 -0500
+
+    implement lazy cache
+
+commit 5402a9c77196a3ad977c207debdbf16ee4410b1a
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 22:27:05 2014 -0500
+
+    sepher not accepting
+
+commit 2423f50ee28b34528c8c6ef56912e9518484c9b8
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:40:01 2014 -0500
+
+    Finished
+
+commit 48cb29b842e8a051d7a06736bcefba66f7401bbf
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Tue Jun 17 13:34:08 2014 -0500
+
+    Finished
+
+commit 4cba8b3ac91f6308224ef5da0ddc4197cce8714e
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 23:54:03 2014 -0500
+
+    implement lazy cache
+
+commit 5402a9c77196a3ad977c207debdbf16ee4410b1a
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 22:27:05 2014 -0500
+
+    sepher not accepting
+
+commit f0dc3f35876606c9c0062aae936e3aeca89376fc
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 22:05:21 2014 -0500
+
+    cache implemented
+
+commit 38fcf2d041c3043b86a1f2370a51f7b9eeef83b7
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 15:20:30 2014 -0500
+
+    Add Assertions
+
+commit 9025096af0dc3c3f63c03463fee53145f23f8475
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 15:14:45 2014 -0500
+
+    Pass all test cases
+
+commit dadf18e405ce5417f51cefb905d7c4cce665244d
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:52:17 2014 -0500
+
+    sphere accepted
+
+commit 539da90e3269e9e0e4c2928be3a41648d867a43b
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:38:40 2014 -0500
+
+    add new files
+
+commit 653b0641ad0a422944212459de22265f42fb63ce
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 14:32:28 2014 -0500
+
+    make sure inpute in right order
+
+commit f476c6548ac798a26b82d96d0dc4050cc6749e83
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Mon Jun 16 12:37:42 2014 -0500
+
+    simple method successfully implemented
+
+commit 8a87d59b60452f052b5ed27450fd015397c58c47
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Thu Jun 12 10:57:28 2014 -0500
+
+    The resulty is still not correct without the cahce algorithm
+
+commit b3e7ea27c52333126a7641cfeac3e98aa7fe2a62
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Wed Jun 11 19:18:01 2014 -0500
+
+    Fixing the bug
+
+commit 1c5747c0cda3d8a70654922549aa76929f4d5ed8
+Author: Terry Liang <liang810612@hotmail.com>
+Date:   Wed Jun 11 14:22:25 2014 -0500
+
+    first commit
+
